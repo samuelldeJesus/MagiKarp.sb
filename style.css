@@ -961,3 +961,410 @@ section,
 
 }
 
+
+/* =========================================
+   11. RESPONSIVE PARA MÓVILES
+   ========================================= */
+
+/* Evitar desbordamientos horizontales */
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+img,
+video {
+    max-width: 100%;
+}
+
+/* =========================================
+   TABLETS Y MÓVILES
+   ========================================= */
+
+@media (max-width: 991.98px) {
+
+    /* HEADER */
+    #header .container-fluid {
+        flex-wrap: wrap;
+    }
+
+    #header .navbar-brand img {
+        width: 70px;
+        height: auto;
+    }
+
+    .marca {
+        flex: 1;
+        min-width: 0;
+        text-align: center;
+    }
+
+    .marca h3 {
+        font-size: 19px;
+        margin-top: 5px;
+    }
+
+    .marca p {
+        font-size: 9px;
+        letter-spacing: 1px;
+        margin-bottom: 0;
+    }
+
+    .navbar-toggler {
+        padding: 6px 9px;
+        flex-shrink: 0;
+    }
+
+    /* Menú desplegable */
+    #navbarSupportedContent {
+        flex-basis: 100%;
+        width: 100%;
+        padding: 15px 0;
+    }
+
+    .navbar-nav {
+        width: 100%;
+        gap: 5px;
+        align-items: center;
+    }
+
+    #navbarSupportedContent ul li a {
+        padding: 9px 12px;
+    }
+
+    .acoes-header {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 12px;
+    }
+
+    .boton-header {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    /* HERO */
+    .contenedor_hero {
+        min-height: 100svh;
+        padding: 130px 20px 55px;
+        background-position: center;
+    }
+
+    .contenedor_hero-text {
+        width: 100%;
+        max-width: 650px;
+        margin: 0 auto;
+    }
+
+    .contenedor_hero-text h1 {
+        font-size: clamp(2.2rem, 6vw, 3.5rem);
+        line-height: 1.15;
+        overflow-wrap: anywhere;
+    }
+
+    .contenedor_hero-text .subtitulo-destaque {
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    /* SOBRE NÓS */
+    .contenedor_sobre-galeria {
+        width: 100%;
+        max-width: 500px;
+        margin: 25px auto 0;
+    }
+
+    .contenedor_sobre-galeria-caja {
+        max-width: 48%;
+    }
+
+    .contenedor_sobre-galeria-caja:hover {
+        transform: rotate(0deg) scale(1.08);
+    }
+
+    .foto-1:hover,
+    .foto-3:hover {
+        transform: translateX(5%) rotate(0deg) scale(1.08);
+    }
+
+    .foto-2:hover,
+    .foto-4:hover {
+        transform: translateX(-5%) rotate(0deg) scale(1.08);
+    }
+
+    /* CARRUSEL */
+    .galeria-carousel {
+        width: 100%;
+    }
+
+    .galeria-carousel .carousel-item img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    /* EXPERIENCIA */
+    .vantaje-2 {
+        transform: none;
+    }
+
+    /* CONTACTO */
+    #contato .btn-principal,
+    #contato .btn-secundario {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+}
+
+/* =========================================
+   MÓVILES: HASTA 575 PX
+   ========================================= */
+
+@media (max-width: 575.98px) {
+
+    /* HEADER */
+    #header .navbar-brand img {
+        width: 52px;
+    }
+
+    .marca h3 {
+        font-size: 16px;
+        margin-top: 0;
+    }
+
+    .marca p {
+        font-size: 8px;
+        letter-spacing: 0.8px;
+    }
+
+    .navbar-toggler {
+        padding: 5px 7px;
+    }
+
+    #navbarSupportedContent {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    .acoes-header {
+        gap: 12px;
+    }
+
+    .boton-header {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+    /* HERO */
+    .contenedor_hero {
+        min-height: 100svh;
+        padding: 115px 16px 40px;
+        background-position: center;
+    }
+
+    .contenedor_hero-text {
+        width: 100%;
+    }
+
+    .contenedor_hero-text h1 {
+        font-size: clamp(2rem, 9vw, 2.8rem);
+        line-height: 1.12;
+    }
+
+    .contenedor_hero-text .subtitulo-destaque {
+        font-size: 10px;
+        letter-spacing: 0.8px;
+    }
+
+    .contenedor_hero-text p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .btn-principal,
+    .video-btn {
+        display: inline-block;
+        max-width: 100%;
+        padding: 10px 13px;
+        font-size: 13px;
+        white-space: normal;
+    }
+
+    /* SOBRE NÓS Y FOTOGRAFÍAS */
+    .contenedor_sobre-galeria {
+        height: 330px;
+        margin-top: 20px;
+    }
+
+    .contenedor_sobre-galeria-caja {
+        width: 48%;
+        padding: 5px 5px 0;
+    }
+
+    .contenedor_sobre-galeria-caja img {
+        height: 105px;
+    }
+
+    .contenedor_sobre-galeria-caja p {
+        padding: 7px 2px 9px;
+        font-size: 0.68rem;
+        overflow-wrap: anywhere;
+    }
+
+    .contenedor_sobre-galeria-caja:hover {
+        transform: rotate(0deg) scale(1.04);
+    }
+
+    .foto-1:hover,
+    .foto-3:hover,
+    .foto-2:hover,
+    .foto-4:hover {
+        transform: rotate(0deg) scale(1.04);
+    }
+
+    /* CARRUSEL */
+    .galeria-carousel .carousel-item img {
+        height: 260px;
+    }
+
+    .galeria-carousel .carousel-caption {
+        padding: 30px 35px 25px;
+    }
+
+    .galeria-carousel .carousel-caption h5 {
+        font-size: 0.95rem;
+    }
+
+    .galeria-carousel .carousel-caption p {
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+    }
+
+    .galeria-carousel .carousel-control-prev,
+    .galeria-carousel .carousel-control-next {
+        width: 12%;
+    }
+
+    .galeria-carousel .carousel-control-prev-icon,
+    .galeria-carousel .carousel-control-next-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* VENTAJAS */
+    .contenedor_experiencia-cajas {
+        padding: 16px;
+    }
+
+    .contenedor_experiencia-titulo h2 {
+        font-size: 25px;
+    }
+
+    .contenedor_experiencia-titulo span {
+        font-size: 29px;
+    }
+
+    .ico {
+        font-size: 25px;
+        padding: 16px;
+    }
+
+    /* CONTACTO */
+    #contato .btn-principal i,
+    #contato .btn-principal .flecha,
+    #contato .btn-secundario .flecha,
+    #contato .btn-secundario i {
+        font-size: 25px;
+        margin-right: 8px;
+    }
+
+    #contato .btn-principal p,
+    #contato .btn-secundario p {
+        font-size: 11px;
+    }
+
+    .contenedor-contato-img img {
+        display: none;
+    }
+
+    /* FOOTER */
+    footer img {
+        width: 75px;
+    }
+
+    footer h5 {
+        font-size: 22px;
+    }
+
+    .copy {
+        font-size: 11px;
+        overflow-wrap: anywhere;
+    }
+
+    /* COOKIES */
+    .cookie-banner,
+    .cookie-modal {
+        padding: 12px;
+    }
+
+    .cookie-content,
+    .cookie-modal-content {
+        width: 100%;
+        max-height: 85svh;
+        padding: 18px;
+        overflow-y: auto;
+    }
+
+    .cookie-content h2 {
+        font-size: 19px;
+    }
+
+    .cookie-content p {
+        font-size: 13px;
+    }
+}
+
+/* =========================================
+   MÓVILES MUY PEQUEÑOS: HASTA 360 PX
+   ========================================= */
+
+@media (max-width: 360px) {
+
+    #header .navbar-brand img {
+        width: 42px;
+    }
+
+    .marca h3 {
+        font-size: 14px;
+    }
+
+    .marca p {
+        font-size: 7px;
+        letter-spacing: 0.5px;
+    }
+
+    .navbar-toggler {
+        padding: 4px 5px;
+    }
+
+    .contenedor_hero {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .contenedor_hero-text h1 {
+        font-size: 1.9rem;
+    }
+
+    .contenedor_sobre-galeria-caja img {
+        height: 85px;
+    }
+
+    .galeria-carousel .carousel-item img {
+        height: 220px;
+    }
+}
+
+
