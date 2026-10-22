@@ -1030,6 +1030,7 @@ section,
 }
 
 
+
 /* Centrar la marca solo en dispositivos móviles */
 @media (max-width: 991.98px) {
     #header .navbar > .container-fluid {
@@ -1066,6 +1067,3 @@ section,
         width: 45px;
     }
 }
-
-
-
