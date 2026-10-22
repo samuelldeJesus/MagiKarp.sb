@@ -88,6 +88,12 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}
 
 html {
     min-height: 100%;
@@ -97,12 +103,18 @@ body {
     max-width: 100%;
     min-height: 100vh;
     margin: 0;
+    overflow-x: clip;
 
     background-image: url("img/fundo-hojas.png");
     background-position: center top;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+}
+
+img,
+video {
+    max-width: 100%;
 }
 
 
@@ -157,6 +169,7 @@ h4 {
     left: 0;
     width: 100%;
     z-index: 1000;
+    
     color: var(--texto-principal);
     background: rgba(8, 13, 16, 0.35);
     backdrop-filter: blur(12px);
@@ -164,6 +177,11 @@ h4 {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: transform var(--transicion-normal);
+}
+
+/* Elimina el fondo de Bootstrap del nav */
+#header .navbar {
+    background: transparent !important;
 }
 
 /* Esconde o cabeçalho ao descer a página */
@@ -224,6 +242,12 @@ h4 {
     transition: transform 0.8s ease;
 }
 
+#header .navbar-nav .nav-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+}
+
 .acoes-header a:hover {
     transform: scale(1.1);
 }
@@ -256,10 +280,41 @@ h4 {
     box-shadow: 0 0 0 0.2rem rgba(255, 250, 243, 0.3);
 }
 
+#header .navbar-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+
+    width: 100%;
+    height: 2px;
+    background-color: #c59f4d;
+
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.3s ease;
+
+    display: block;
+}
+
+#header .navbar-nav .nav-link:hover::after {
+    transform: scaleX(1);
+}
+
 
 /* =========================================================
    4. HERO
 ========================================================= */
+
+/* HERO: ocupar todo el ancho disponible */
+.hero {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
 .contenedor_hero {
     background-image: url("img/hero.png");
@@ -277,6 +332,9 @@ h4 {
 .contenedor_hero-text {
     width: 60%;
     color: var(--texto-principal);
+    
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 
 .contenedor_hero-text .subtitulo-destaque {
@@ -286,8 +344,9 @@ h4 {
 }
 
 .contenedor_hero-text h1 {
-    font-size: 70px;
     color: var(--texto-principal);
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    overflow-wrap: break-word;
 }
 
 .btn-principal {
@@ -324,7 +383,10 @@ h4 {
 ========================================================= */
 
 
-
+.contenedor_sobre-galeria {
+    max-width: 100%;
+    min-width: 0;
+}
 
 .contenedor_sobre-text h2 {
     color: var(--verde-bosque);
@@ -467,8 +529,10 @@ h4 {
 
 /* Tamanho do carrossel */
 .galeria-carousel {
+    width: 100%;
     max-width: 900px;
-    margin: 0 auto;
+    margin-inline: auto;
+    max-width: 900px;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -476,7 +540,9 @@ h4 {
 
 /* Imagens */
 .galeria-carousel .carousel-item img {
+    display: block;
     width: 100%;
+    max-width: 100%;
     height: 480px;
     object-fit: cover;
     object-position: center;
@@ -876,6 +942,22 @@ section,
         margin-top: 25px;
         height: 480px;
     }
+
+    #header .navbar-collapse {
+        flex-basis: 100%;
+        width: 100%;
+    }
+
+    #header .navbar-nav {
+        gap: 0;
+    }
+
+    #header .acoes-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 10px;
+    }
 }
 
 /* Telemóveis: até 575px */
@@ -883,6 +965,40 @@ section,
     /* Cabeçalho */
     #header nav div a img {
         width: 60px;
+    }
+
+    .hero {
+        min-height: 100svh;
+    }
+
+    .hero .container {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .hero .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .hero .row > [class*="col-"] {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .contenedor_hero-text .lead {
+        font-size: 1rem;
+    }
+
+    .contenedor_hero-text .btn {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .galeria-carousel .carousel-item img {
+        height: 300px;
     }
 
     /* Galeria sobre nós */
@@ -962,409 +1078,57 @@ section,
 }
 
 
-/* =========================================
-   11. RESPONSIVE PARA MÓVILES
-   ========================================= */
 
-/* Evitar desbordamientos horizontales */
-html,
-body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: clip;
+
+
+/* ===== CORRECCIÓN DEL HEADER EN MÓVILES ===== */
+
+/* #header .navbar > .container-fluid {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+} */
+
+
+/* Logo */
+/* #header .navbar-brand {
+    flex: 0 0 auto;
+    padding: 0;
+    margin: 0;
 }
 
-img,
-video {
-    max-width: 100%;
+#header .navbar-brand img {
+    display: block;
+    width: 55px;
+    height: auto;
+} */
+
+/* Nombre de la marca */
+/* #header .marca {
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 2px;
 }
 
-/* =========================================
-   TABLETS Y MÓVILES
-   ========================================= */
-
-@media (max-width: 991.98px) {
-
-    /* HEADER */
-    #header .container-fluid {
-        flex-wrap: wrap;
-    }
-
-    #header .navbar-brand img {
-        width: 70px;
-        height: auto;
-    }
-
-    .marca {
-        flex: 1;
-        min-width: 0;
-        text-align: center;
-    }
-
-    .marca h3 {
-        font-size: 19px;
-        margin-top: 5px;
-    }
-
-    .marca p {
-        font-size: 9px;
-        letter-spacing: 1px;
-        margin-bottom: 0;
-    }
-
-    .navbar-toggler {
-        padding: 6px 9px;
-        flex-shrink: 0;
-    }
-
-    /* Menú desplegable */
-    #navbarSupportedContent {
-        flex-basis: 100%;
-        width: 100%;
-        padding: 15px 0;
-    }
-
-    .navbar-nav {
-        width: 100%;
-        gap: 5px;
-        align-items: center;
-    }
-
-    #navbarSupportedContent ul li a {
-        padding: 9px 12px;
-    }
-
-    .acoes-header {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-top: 12px;
-    }
-
-    .boton-header {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-
-    /* HERO */
-    .contenedor_hero {
-        min-height: 100svh;
-        padding: 130px 20px 55px;
-        background-position: center;
-    }
-
-    .contenedor_hero-text {
-        width: 100%;
-        max-width: 650px;
-        margin: 0 auto;
-    }
-
-    .contenedor_hero-text h1 {
-        font-size: clamp(2.2rem, 6vw, 3.5rem);
-        line-height: 1.15;
-        overflow-wrap: anywhere;
-    }
-
-    .contenedor_hero-text .subtitulo-destaque {
-        font-size: 12px;
-        letter-spacing: 1px;
-    }
-
-    /* SOBRE NÓS */
-    .contenedor_sobre-galeria {
-        width: 100%;
-        max-width: 500px;
-        margin: 25px auto 0;
-    }
-
-    .contenedor_sobre-galeria-caja {
-        max-width: 48%;
-    }
-
-    .contenedor_sobre-galeria-caja:hover {
-        transform: rotate(0deg) scale(1.08);
-    }
-
-    .foto-1:hover,
-    .foto-3:hover {
-        transform: translateX(5%) rotate(0deg) scale(1.08);
-    }
-
-    .foto-2:hover,
-    .foto-4:hover {
-        transform: translateX(-5%) rotate(0deg) scale(1.08);
-    }
-
-    /* CARRUSEL */
-    .galeria-carousel {
-        width: 100%;
-    }
-
-    .galeria-carousel .carousel-item img {
-        width: 100%;
-        object-fit: cover;
-    }
-
-    /* EXPERIENCIA */
-    .vantaje-2 {
-        transform: none;
-    }
-
-    /* CONTACTO */
-    #contato .btn-principal,
-    #contato .btn-secundario {
-        max-width: 100%;
-        overflow-wrap: anywhere;
-    }
+#header .marca h3 {
+    margin: 0;
+    font-size: 18px;
+    white-space: nowrap;
 }
 
-/* =========================================
-   MÓVILES: HASTA 575 PX
-   ========================================= */
+#header .marca p {
+    margin: 0;
+    font-size: 9px;
+} */
 
-@media (max-width: 575.98px) {
+/* Hamburguesa */
+/* #header .navbar-toggler {
+    flex: 0 0 auto;
+    margin-left: auto;
+    padding: 5px 8px;
+} */
 
-    /* HEADER */
-    #header .navbar-brand img {
-        width: 52px;
-    }
 
-    .marca h3 {
-        font-size: 16px;
-        margin-top: 0;
-    }
-
-    .marca p {
-        font-size: 8px;
-        letter-spacing: 0.8px;
-    }
-
-    .navbar-toggler {
-        padding: 5px 7px;
-    }
-
-    #navbarSupportedContent {
-        max-height: 70vh;
-        overflow-y: auto;
-    }
-
-    .acoes-header {
-        gap: 12px;
-    }
-
-    .boton-header {
-        font-size: 12px;
-        padding: 8px 10px;
-    }
-
-    /* HERO */
-    .contenedor_hero {
-        min-height: 100svh;
-        padding: 115px 16px 40px;
-        background-position: center;
-    }
-
-    .contenedor_hero-text {
-        width: 100%;
-    }
-
-    .contenedor_hero-text h1 {
-        font-size: clamp(2rem, 9vw, 2.8rem);
-        line-height: 1.12;
-    }
-
-    .contenedor_hero-text .subtitulo-destaque {
-        font-size: 10px;
-        letter-spacing: 0.8px;
-    }
-
-    .contenedor_hero-text p {
-        font-size: 14px;
-        line-height: 1.6;
-    }
-
-    .btn-principal,
-    .video-btn {
-        display: inline-block;
-        max-width: 100%;
-        padding: 10px 13px;
-        font-size: 13px;
-        white-space: normal;
-    }
-
-    /* SOBRE NÓS Y FOTOGRAFÍAS */
-    .contenedor_sobre-galeria {
-        height: 330px;
-        margin-top: 20px;
-    }
-
-    .contenedor_sobre-galeria-caja {
-        width: 48%;
-        padding: 5px 5px 0;
-    }
-
-    .contenedor_sobre-galeria-caja img {
-        height: 105px;
-    }
-
-    .contenedor_sobre-galeria-caja p {
-        padding: 7px 2px 9px;
-        font-size: 0.68rem;
-        overflow-wrap: anywhere;
-    }
-
-    .contenedor_sobre-galeria-caja:hover {
-        transform: rotate(0deg) scale(1.04);
-    }
-
-    .foto-1:hover,
-    .foto-3:hover,
-    .foto-2:hover,
-    .foto-4:hover {
-        transform: rotate(0deg) scale(1.04);
-    }
-
-    /* CARRUSEL */
-    .galeria-carousel .carousel-item img {
-        height: 260px;
-    }
-
-    .galeria-carousel .carousel-caption {
-        padding: 30px 35px 25px;
-    }
-
-    .galeria-carousel .carousel-caption h5 {
-        font-size: 0.95rem;
-    }
-
-    .galeria-carousel .carousel-caption p {
-        font-size: 0.75rem;
-        margin-bottom: 5px;
-    }
-
-    .galeria-carousel .carousel-control-prev,
-    .galeria-carousel .carousel-control-next {
-        width: 12%;
-    }
-
-    .galeria-carousel .carousel-control-prev-icon,
-    .galeria-carousel .carousel-control-next-icon {
-        width: 28px;
-        height: 28px;
-    }
-
-    /* VENTAJAS */
-    .contenedor_experiencia-cajas {
-        padding: 16px;
-    }
-
-    .contenedor_experiencia-titulo h2 {
-        font-size: 25px;
-    }
-
-    .contenedor_experiencia-titulo span {
-        font-size: 29px;
-    }
-
-    .ico {
-        font-size: 25px;
-        padding: 16px;
-    }
-
-    /* CONTACTO */
-    #contato .btn-principal i,
-    #contato .btn-principal .flecha,
-    #contato .btn-secundario .flecha,
-    #contato .btn-secundario i {
-        font-size: 25px;
-        margin-right: 8px;
-    }
-
-    #contato .btn-principal p,
-    #contato .btn-secundario p {
-        font-size: 11px;
-    }
-
-    .contenedor-contato-img img {
-        display: none;
-    }
-
-    /* FOOTER */
-    footer img {
-        width: 75px;
-    }
-
-    footer h5 {
-        font-size: 22px;
-    }
-
-    .copy {
-        font-size: 11px;
-        overflow-wrap: anywhere;
-    }
-
-    /* COOKIES */
-    .cookie-banner,
-    .cookie-modal {
-        padding: 12px;
-    }
-
-    .cookie-content,
-    .cookie-modal-content {
-        width: 100%;
-        max-height: 85svh;
-        padding: 18px;
-        overflow-y: auto;
-    }
-
-    .cookie-content h2 {
-        font-size: 19px;
-    }
-
-    .cookie-content p {
-        font-size: 13px;
-    }
-}
-
-/* =========================================
-   MÓVILES MUY PEQUEÑOS: HASTA 360 PX
-   ========================================= */
-
-@media (max-width: 360px) {
-
-    #header .navbar-brand img {
-        width: 42px;
-    }
-
-    .marca h3 {
-        font-size: 14px;
-    }
-
-    .marca p {
-        font-size: 7px;
-        letter-spacing: 0.5px;
-    }
-
-    .navbar-toggler {
-        padding: 4px 5px;
-    }
-
-    .contenedor_hero {
-        padding-right: 12px;
-        padding-left: 12px;
-    }
-
-    .contenedor_hero-text h1 {
-        font-size: 1.9rem;
-    }
-
-    .contenedor_sobre-galeria-caja img {
-        height: 85px;
-    }
-
-    .galeria-carousel .carousel-item img {
-        height: 220px;
-    }
-}
 
 
