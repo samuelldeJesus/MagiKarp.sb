@@ -1,0 +1,964 @@
+/* =========================================================
+   1. VARIÁVEIS GLOBAIS
+========================================================= */
+
+:root {
+    /* Cores principais */
+    --negro-azulado: #080D10;
+    --negro-verde: #0B1715;
+
+    --verde-bosque: #123D32;
+    --verde-esmeralda: #176B58;
+    --verde-agua: #3B9C89;
+
+    --azul-petroleo: #123C4A;
+    --azul-profundo: #0B2633;
+
+    --dorado: #D8BD78;
+    --dorado-claro: #F1DEA6;
+    --dorado-oscuro: #9D7B3D;
+
+    /* Textos */
+    --texto-principal: #F5F1E6;
+    --texto-secundario: #A7B5AF;
+    --texto-oscuro: #10221D;
+
+    /* Fundos e superfícies */
+    --fondo-principal: #080D10;
+    --fondo-secundario: #0B1715;
+    --fondo-tarjeta: #10221D;
+    --fondo-azul: #0B2633;
+
+    /* Bordas */
+    --borde-sutil: #284139;
+    --borde-dorado: #9D7B3D;
+    --borde-destacado: #D8BD78;
+
+    /* Sombras */
+    --sombra-texto: 0 2px 8px rgba(0, 0, 0, 0.45);
+    --sombra-caja: 0 8px 24px rgba(0, 0, 0, 0.30);
+    --sombra-caja-hover: 0 14px 32px rgba(0, 0, 0, 0.45);
+    --sombra-dorada: 0 0 12px rgba(216, 189, 120, 0.20);
+    --sombra-boton: 0 4px 12px rgba(0, 0, 0, 0.30);
+    --sombra-boton-hover: 0 6px 18px rgba(216, 189, 120, 0.25);
+    --sombra-interna: inset 0 1px 4px rgba(0, 0, 0, 0.30);
+
+    /* Transições */
+    --transicion-rapida: 0.2s ease;
+    --transicion-normal: 0.3s ease;
+    --transicion-suave: 0.5s ease-in-out;
+
+    /* Gradientes */
+    --gradiente-principal: linear-gradient(
+        135deg,
+        #080D10,
+        #123D32,
+        #0B2633
+    );
+
+    --gradiente-verde: linear-gradient(
+        135deg,
+        #123D32,
+        #176B58
+    );
+
+    --gradiente-dorado: linear-gradient(
+        135deg,
+        #9D7B3D,
+        #D8BD78,
+        #F1DEA6
+    );
+
+    --gradiente-boton: linear-gradient(
+        135deg,
+        #D8BD78,
+        #F1DEA6
+    );
+}
+
+
+/* =========================================================
+   2. ESTILOS GERAIS
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+html {
+    min-height: 100%;
+}
+
+body {
+    max-width: 100%;
+    min-height: 100vh;
+    margin: 0;
+
+    background-image: url("img/fundo-hojas.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: var(--texto-principal);
+    text-decoration: none;
+}
+
+span {
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+header img {
+    width: 100px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: "Ventura Free";
+}
+
+.verde {
+    color: var(--verde-bosque);
+}
+
+.baige {
+    color: var(--dorado-oscuro);
+}
+
+.texto {
+    color: #2f3e33;
+}
+
+
+/* =========================================================
+   3. CABEÇALHO E NAVEGAÇÃO
+========================================================= */
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    color: var(--texto-principal);
+    background: rgba(8, 13, 16, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform var(--transicion-normal);
+}
+
+/* Esconde o cabeçalho ao descer a página */
+#header.header-oculto {
+    transform: translateY(-100%);
+}
+
+.iconos i {
+    font-size: 22px;
+}
+
+.boton-header {
+    border-radius: 999px;
+    border: 2px solid var(--borde-dorado);
+    color: var(--texto-principal);
+    padding: 10px 15px;
+}
+
+.boton-header i {
+    color: var(--borde-dorado);
+}
+
+.marca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.marca h3 {
+    font-family: "tt_hoves_pro_trialblack";
+    font-size: 22px;
+    margin-top: 15px;
+    color: var(--dorado-claro);
+}
+
+.marca p {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+}
+
+.acoes-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-nav {
+    gap: 15px;
+}
+
+.acoes-header a {
+    transition: transform 0.8s ease;
+}
+
+.acoes-header a:hover {
+    transform: scale(1.1);
+}
+
+#navbarSupportedContent ul li a {
+    position: relative;
+    display: inline-block;
+    color: var(--texto-principal);
+    text-decoration: none;
+    transition: transform 0.8s ease, color var(--transicion-normal);
+}
+
+#navbarSupportedContent ul li a:hover {
+    transform: scale(1.05);
+    color: var(--dorado-claro);
+}
+
+/* Botão hamburguer */
+.navbar-toggler-icon {
+    filter: brightness(0) saturate(100%)
+        invert(96%) sepia(10%)
+        saturate(300%) hue-rotate(350deg);
+}
+
+.navbar-toggler {
+    border: 1px solid #fffaf3;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 250, 243, 0.3);
+}
+
+
+/* =========================================================
+   4. HERO
+========================================================= */
+
+.contenedor_hero {
+    background-image: url("img/hero.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 100%;
+    min-height: 100vh;
+}
+
+.titulo {
+    color: var(--dorado-claro);
+}
+
+.contenedor_hero-text {
+    width: 60%;
+    color: var(--texto-principal);
+}
+
+.contenedor_hero-text .subtitulo-destaque {
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1.3px;
+}
+
+.contenedor_hero-text h1 {
+    font-size: 70px;
+    color: var(--texto-principal);
+}
+
+.btn-principal {
+    background: linear-gradient(to top, var(--dorado-oscuro), var(--dorado-claro));
+    border-radius: 999px;
+    padding: 10px 15px;
+    color: var(--verde-bosque);
+    border: 2px solid var(--dorado);
+}
+
+.btn-principal:hover {
+    border-color: var(--dorado);
+    opacity: 0.9;
+    color: #fff;
+}
+
+.video-btn {
+    border-radius: 999px;
+    color: var(--texto-principal);
+    background: rgb(9, 9, 9);
+    padding: 10px 20px;
+    border: 2px solid var(--texto-secundario);
+}
+
+.video-btn:hover {
+    color: var(--texto-principal);
+    background: rgb(24, 24, 24);
+    border-color: var(--texto-secundario);
+}
+
+
+/* =========================================================
+   5. SOBRE NÓS E GALERIA DE FOTOGRAFIAS
+========================================================= */
+
+
+
+
+.contenedor_sobre-text h2 {
+    color: var(--verde-bosque);
+}
+
+.contenedor_sobre-text p {
+    color: #39463F;
+    line-height: 1.8;
+}
+
+.contenedor_sobre-text .obs {
+    color: #68766D;
+}
+
+.sobre-etiqueta {
+    color: var(--dorado-oscuro);
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* Área das fotografias */
+.contenedor_sobre-galeria {
+    position: relative;
+    width: 100%;
+    height: 540px;
+}
+
+/* Aparência de fotografias impressas */
+.contenedor_sobre-galeria-caja {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 45%;
+    padding: 10px 10px 0;
+    background: #fff;
+    border: 1px solid #e8e5dd;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+    transform-origin: center center;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    cursor: pointer;
+}
+
+.contenedor_sobre-galeria-caja img {
+    display: block;
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+}
+
+.contenedor_sobre-galeria-caja p {
+    margin: 0;
+    padding: 12px 4px 15px;
+    color: #333;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Posições assimétricas */
+.foto-1 {
+    top: 7%;
+    left: 8%;
+    transform: rotate(-9deg);
+    z-index: 1;
+}
+
+.foto-2 {
+    top: 4%;
+    right: 3%;
+    transform: rotate(8deg);
+    z-index: 2;
+}
+
+.foto-3 {
+    bottom: 5%;
+    left: 6%;
+    transform: rotate(7deg);
+    z-index: 3;
+}
+
+.foto-4 {
+    bottom: 3%;
+    right: 4%;
+    transform: rotate(-8deg);
+    z-index: 2;
+}
+
+/* Hover: endireitar, ampliar e trazer para a frente */
+.contenedor_sobre-galeria-caja:hover {
+    transform: rotate(0deg) scale(1.5);
+    z-index: 10;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+
+.foto-1:hover,
+.foto-3:hover {
+    transform: translateX(15%) rotate(0deg) scale(1.5);
+    z-index: 10;
+}
+
+.foto-2:hover,
+.foto-4:hover {
+    transform: translateX(-15%) rotate(0deg) scale(1.5);
+    z-index: 10;
+}
+
+
+/* =========================================================
+   6. GALERIA / CARROSSEL
+========================================================= */
+
+.carousel-item {
+    max-width: 100%;
+    max-height: 100vh;
+    border: 2px solid var(--borde-dorado);
+    border-radius: 10px;
+}
+
+.produtos {
+    background-color: #F1F5F0;
+    color: var(--verde-bosque);
+}
+
+.galeria-etiqueta {
+    color: var(--dorado-oscuro);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.galeria-titulo {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-top: 10px;
+    color: var(--verde-bosque);
+}
+
+/* Tamanho do carrossel */
+.galeria-carousel {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagens */
+.galeria-carousel .carousel-item img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Legenda */
+.galeria-carousel .carousel-caption {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 50px 20px 35px;
+    background: linear-gradient(
+        transparent,
+        rgba(8, 19, 15, 0.9)
+    );
+}
+
+.galeria-carousel .carousel-caption h5,
+.galeria-carousel .carousel-caption p {
+    color: #fff;
+}
+
+/* Setas */
+.galeria-carousel .carousel-control-prev,
+.galeria-carousel .carousel-control-next {
+    width: 10%;
+    opacity: 1;
+}
+
+.galeria-carousel .carousel-control-prev-icon,
+.galeria-carousel .carousel-control-next-icon {
+    width: 42px;
+    height: 42px;
+    background-color: #123D32;
+    background-size: 50% 50%;
+    border: 1px solid var(--dorado);
+    border-radius: 50%;
+}
+
+/* Indicadores */
+.galeria-carousel .carousel-indicators {
+    margin-bottom: 12px;
+    z-index: 3;
+}
+
+.galeria-carousel .carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--texto-principal);
+    opacity: 0.7;
+}
+
+.galeria-carousel .carousel-indicators .active {
+    background-color: var(--dorado);
+    opacity: 1;
+}
+
+
+/* =========================================================
+   7. VANTAGENS / EXPERIÊNCIA
+========================================================= */
+
+.ico {
+    font-size: 30px;
+    background: var(--verde-agua);
+    color: var(--texto-principal);
+    padding: 20px;
+    border-radius: 50%;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.315);
+    margin: 10px 0;
+}
+
+.contenedor_experiencia-cajas {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.285);
+    padding: 20px;
+}
+
+.contenedores-experiencia {
+    margin: 0;
+    width: 100%;
+}
+
+.vantaje-2 {
+    z-index: 2;
+    transform: scale(1.05);
+}
+
+.contenedor_experiencia-titulo h2 {
+    color: var(--verde-bosque);
+    font-size: 30px;
+}
+
+.contenedor_experiencia-titulo span {
+    color: var(--dorado-oscuro);
+    font-size: 35px;
+}
+
+.contenedor_experiencia-titulo p {
+    color: rgb(84, 93, 84);
+    letter-spacing: 1.3px;
+}
+
+.contenedor_experiencia-cajas p {
+    color: #334131;
+}
+
+.contenedor_experiencia-cajas h5 {
+    color: var(--verde-bosque);
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   8. CONTACTO
+========================================================= */
+
+
+
+
+.caja-text {
+    color: var(--verde-bosque);
+}
+
+.btn-text {
+    display: flex;
+}
+
+.p-contato {
+    font-size: 13px;
+}
+
+.linea-contato {
+    width: 60px;
+    height: 2px;
+    background-color: var(--dorado-oscuro);
+    border-radius: 999px;
+    margin: 0 auto 20px;
+}
+
+.btn-secundario {
+    border: 2px solid var(--dorado-oscuro);
+    border-radius: 999px;
+    box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.269);
+}
+
+#contato .btn-principal {
+    background: linear-gradient(to top, var(--fondo-tarjeta), var(--verde-bosque));
+    border: none;
+    color: var(--texto-principal);
+    box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.269);
+}
+
+#contato .btn-principal i,
+#contato .btn-principal .flecha,
+#contato .btn-secundario .flecha {
+    font-size: 35px;
+    margin-right: 10px;
+}
+
+#contato a {
+    margin: 10px 0;
+}
+
+#contato .btn-principal p,
+#contato .btn-secundario p {
+    font-weight: 100;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    font-style: italic;
+}
+
+#contato .btn-principal p {
+    color: var(--texto-secundario);
+}
+
+#contato .btn-secundario p {
+    color: var(--texto-oscuro);
+}
+
+#contato .btn-secundario i {
+    font-size: 35px;
+    color: inherit;
+    margin-right: 10px;
+}
+
+.btn-secundario:hover {
+    border-color: var(--dorado-oscuro);
+    background: linear-gradient(to top, var(--dorado-oscuro), var(--dorado));
+    color: #fff;
+}
+
+.contenedor-contato-img img {
+    border-radius: 15px;
+    border: 2px solid var(--dorado-oscuro);
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.288);
+}
+
+
+/* =========================================================
+   8. FOOTER
+========================================================= */
+
+footer {
+    background: var(--fondo-secundario);
+}
+footer img {
+    width: 100px;
+}
+
+footer a {
+    color: var(--texto-principal);
+}
+
+footer h5{
+    color: var(--dorado);
+    font-family: 'Ventura Free';
+    margin: 10px 0 0 ;
+    font-size: 27px;
+    padding-bottom: 0;
+}
+.f-contatos,
+.f-info,
+.f-dev {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.copy {
+    color: var(--texto-secundario);
+    letter-spacing: 1.1px;
+    font-style: italic;
+    font-size: 13px;
+}
+
+.dev .card{
+    background-color: var(--verde-bosque);
+    border: 2px solid var(--dorado-oscuro);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.534);
+    border-radius: 40px;
+}
+
+.dev a{
+    color: var(--dorado-claro);
+}
+.dev p{
+    color: var(--texto-principal);
+}
+.dev h5 {
+    font-size: 25px;
+}
+.linea-footer {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to left, var(--fondo-secundario), var(--dorado-oscuro), var(--fondo-secundario));
+    margin: 10px 0;
+}
+
+.f-titulo-linea {
+    width: 30%;
+    height: 2px;
+    background: linear-gradient(to left, var(--fondo-secundario), var(--dorado-oscuro), var(--fondo-secundario));
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================================================
+   9. COOKIES
+========================================================= */
+
+/* Fundo que cobre toda a página e centra o banner */
+.cookie-banner {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    overflow-y: auto;
+}
+
+/* Respeitar o atributo hidden */
+.cookie-banner[hidden],
+.cookie-modal[hidden] {
+    display: none !important;
+}
+
+/* Cartão central */
+.cookie-content {
+    width: min(460px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #173b35;
+    color: #fff;
+    padding: 28px;
+    border: 1px solid #c59f4d;
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.cookie-content h2 {
+    color: #e5cb88;
+    font-size: 22px;
+    margin-bottom: 14px;
+}
+
+.cookie-content p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.cookie-content a {
+    display: inline-block;
+    color: #e5cb88;
+    margin-top: 16px;
+}
+
+/* Botões */
+.cookie-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.cookie-btn {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 7px;
+    border: 1px solid #c59f4d;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.cookie-primary {
+    background: #c59f4d;
+    color: #173b35;
+}
+
+.cookie-secondary {
+    background: transparent;
+    color: #fff;
+}
+
+.cookie-btn:hover {
+    filter: brightness(1.1);
+}
+
+/* Modal de configurações */
+.cookie-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.cookie-modal-content {
+    width: min(480px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 25px;
+    border-radius: 12px;
+    background: #fff;
+    color: #25312e;
+}
+
+section,
+.sobre,
+#galeria,
+.contacto {
+    background-color: transparent;
+}
+
+
+/* =========================================================
+   10. RESPONSIVO
+   Todas as media queries ficam reunidas nesta secção
+========================================================= */
+
+/* Tablets e ecrãs abaixo de 992px */
+@media (max-width: 991.98px) {
+    .contenedor_sobre-galeria {
+        margin-top: 25px;
+        height: 480px;
+    }
+}
+
+/* Telemóveis: até 575px */
+@media (max-width: 575.98px) {
+    /* Cabeçalho */
+    #header nav div a img {
+        width: 60px;
+    }
+
+    /* Galeria sobre nós */
+    .contenedor_sobre-galeria {
+        height: 350px;
+    }
+
+    .contenedor_sobre-galeria-caja {
+        width: 48%;
+        padding: 6px 6px 0;
+    }
+
+    .contenedor_sobre-galeria-caja img {
+        height: 115px;
+    }
+
+    .contenedor_sobre-galeria-caja p {
+        padding: 8px 2px 10px;
+        font-size: 0.72rem;
+    }
+
+    /* Carrossel */
+    .galeria-carousel .carousel-item img {
+        height: 300px;
+    }
+
+    .galeria-carousel .carousel-caption {
+        padding: 35px 35px 30px;
+    }
+
+    .galeria-carousel .carousel-caption h5 {
+        font-size: 1rem;
+    }
+
+    .galeria-carousel .carousel-caption p {
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+    }
+
+    .galeria-carousel .carousel-control-prev,
+    .galeria-carousel .carousel-control-next {
+        width: 13%;
+    }
+
+    .galeria-carousel .carousel-control-prev-icon,
+    .galeria-carousel .carousel-control-next-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    /* Cartão de vantagem */
+    .vantaje-2 {
+        transform: none;
+    }
+
+    /* Banner e modal de cookies */
+    .cookie-content,
+    .cookie-modal-content {
+        padding: 20px;
+    }
+
+    /* desaparecer imagen contato */
+    .contenedor-contato-img img {
+        display: none;
+    }
+
+    footer .f-titulo-linea {
+        margin: auto;
+    }
+
+    body {
+        background-attachment: scroll;
+        background-position: center top;
+        background-size: auto 100%;
+    }
+
+}
+
+
