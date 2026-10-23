@@ -317,7 +317,14 @@ h4 {
 }
 
 .contenedor_hero {
-    background-image: url("img/hero.png");
+    background-image:
+        radial-gradient(
+            ellipse at center,
+            rgba(0, 0, 0, 0.75),
+            rgba(0, 0, 0, 0.25),
+            rgba(0, 0, 0, 0.75)
+        ),
+        url("img/hero.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
