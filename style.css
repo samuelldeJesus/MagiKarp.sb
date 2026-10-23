@@ -330,7 +330,7 @@ h4 {
 }
 
 .contenedor_hero-text {
-    width: 60%;
+    
     color: var(--texto-principal);
     
     max-width: 100%;
@@ -952,6 +952,10 @@ section,
         gap: 0;
     }
 
+    #header .navbar-brand {
+        margin: 0;
+    }
+
     #header .acoes-header {
         display: flex;
         flex-wrap: wrap;
@@ -1076,59 +1080,3 @@ section,
     }
 
 }
-
-
-
-
-
-/* ===== CORRECCIÓN DEL HEADER EN MÓVILES ===== */
-
-/* #header .navbar > .container-fluid {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 8px 12px;
-} */
-
-
-/* Logo */
-/* #header .navbar-brand {
-    flex: 0 0 auto;
-    padding: 0;
-    margin: 0;
-}
-
-#header .navbar-brand img {
-    display: block;
-    width: 55px;
-    height: auto;
-} */
-
-/* Nombre de la marca */
-/* #header .marca {
-    flex: 0 1 auto;
-    min-width: 0;
-    gap: 2px;
-}
-
-#header .marca h3 {
-    margin: 0;
-    font-size: 18px;
-    white-space: nowrap;
-}
-
-#header .marca p {
-    margin: 0;
-    font-size: 9px;
-} */
-
-/* Hamburguesa */
-/* #header .navbar-toggler {
-    flex: 0 0 auto;
-    margin-left: auto;
-    padding: 5px 8px;
-} */
-
-
-
-
