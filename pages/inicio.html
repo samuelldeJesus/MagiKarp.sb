@@ -357,18 +357,27 @@
       }
 
       /* Responsividade */
+      /* Responsividade para Celulares */
       @media (max-width: 480px) {
         #mk-chatbot-container {
           right: 12px;
-          bottom: 84px;
+          bottom: 80px; /* Posicionado un poco más abajo */
           width: calc(100vw - 24px);
-          height: calc(100vh - 110px);
+          
+          /* 1. Usamos svh (Small Viewport Height) para ajustar la altura 
+                descontando la barra de navegación superior del móvil */
+          height: calc(100svh - 150px);
+          
+          /* 2. Límite de altura máxima de seguridad */
+          max-height: 72vh;
         }
+        
         #mk-chatbot-launcher {
           right: 16px;
           bottom: 16px;
-          width: 56px;
-          height: 56px;
+          width: 54px;
+          height: 54px;
+          font-size: 22px;
         }
       }
     </style>
