@@ -221,13 +221,34 @@
         border-bottom-right-radius: 4px;
       }
 
+      /* Cursor piscante durante a digitação */
+      .mk-typing-cursor {
+        display: inline-block;
+        width: 3px;
+        height: 14px;
+        background-color: var(--mk-gold);
+        margin-left: 2px;
+        vertical-align: middle;
+        animation: mkBlink 0.7s infinite;
+      }
+      @keyframes mkBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
       /* Opções de Perguntas Rápidas */
       .mk-cb-quick-options {
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
         margin-top: 6px;
+        opacity: 0;
+        animation: mkFadeIn 0.4s ease forwards;
       }
+      @keyframes mkFadeIn {
+        to { opacity: 1; }
+      }
+
       .mk-cb-chip {
         background-color: rgba(66, 107, 80, 0.25);
         border: 1px solid var(--mk-green);
@@ -257,13 +278,15 @@
         text-decoration: none;
         font-size: 13px;
         transition: transform 0.2s;
+        opacity: 0;
+        animation: mkFadeIn 0.4s ease forwards;
       }
       .mk-cb-whatsapp-btn:hover {
         transform: translateY(-2px);
         color: #000;
       }
 
-      /* Indicador de Digitação (Typing) */
+      /* Indicador de Digitação (Typing Dots) */
       .mk-cb-typing {
         display: flex;
         align-items: center;
@@ -745,16 +768,16 @@
       <script src="galeria.js"></script>
       <script src="../main.js"></script>
 
-      <!-- SCRIPT EXCLUSIVO DO CHATBOT KARP -->
+      <!-- SCRIPT EXCLUSIVO DO CHATBOT KARP COM EFEITO DE DIGITAÇÃO -->
       <script id="magikarp-chatbot-script">
         (function() {
           // CONFIGURAÇÕES DO CHATBOT
           const CHATBOT_CONFIG = {
-            whatsappNumber: "5561992721948", // Número atualizado de atendimento
+            whatsappNumber: "5561992721948",
             defaultMessage: "Olá! Conheci a Magi'Karp pelo site e gostaria de obter mais informações sobre os projetos."
           };
 
-          // BASE DE CONHECIMENTO (PALAVRAS-CHAVE E RESPOSTAS)
+          // BASE DE CONHECIMENTO
           const knowledgeBase = [
             {
               keywords: ["aquaterrario", "aquaterrarios", "o que e", "oque e"],
@@ -777,13 +800,13 @@
               response: "Criamos projetos 100% sob medida! Levamos em consideração o espaço que você tem disponível, o estilo da sua decoração e as espécies que deseja cultivar."
             },
             {
-              keywords: ["preco", "preço", "valor", "quanto custa", "orcamento", "orçamento"],
-              response: "O valor de cada projeto varia de acordo com o tamanho do vidro, tipo de substrato, plantas selecionadas, sistema de filtragem e nível de detalhamento. Quer um orçamento exclusivo?",
+              keywords: ["preco", "preço", "valor", "quanto custa", "orcamento", "orçamento", "comprar"],
+              response: "O valor de cada projeto varia de acordo com o tamanho do vidro, tipo de substrato, plantas selecionadas, sistema de filtragem e nível de detalhamento. Quer um orçamento exclusivo?<br>",
               showWhatsAppBtn: true
             },
             {
               keywords: ["contato", "falar", "whatsapp", "atendimento", "instagram", "redes"],
-              response: "Você pode nos acompanhar no Instagram **@aquaterrarios_magikarp** ou conversar diretamente com nossa equipe no WhatsApp pelo botão abaixo:",
+              response: "Você pode nos acompanhar no Instagram **@aquaterrarios_magikarp** ou conversar diretamente com nossa equipe no WhatsApp pelo botão abaixo:<br>",
               showWhatsAppBtn: true
             }
           ];
@@ -822,11 +845,12 @@
           launcher.addEventListener("click", toggleChat);
           closeBtn.addEventListener("click", toggleChat);
 
-          // MENSAGEM INICIAL DO BOT
+          // MENSAGEM INICIAL DO BOT COM EFEITO DE DIGITAÇÃO
           function sendBotGreeting() {
             const greeting = "Olá! 🐠 Seja bem-vindo à Magi'Karp!\n\nEu sou o Karp, seu assistente virtual. Estou aqui para ajudar você a conhecer nossos aquaterrários, terrários e projetos personalizados.\n\nComo posso ajudar hoje?";
-            addMessage(greeting, "bot");
-            renderQuickOptions();
+            typeBotMessage(greeting, false, () => {
+              renderQuickOptions();
+            });
           }
 
           // EXIBIR OPÇÕES RÁPIDAS
@@ -849,36 +873,71 @@
             scrollToBottom();
           }
 
-          // ADICIONAR MENSAGENS NA INTERFACE
-          function addMessage(text, sender, showWaBtn = false) {
+          // ADICIONAR MENSAGEM DO USUÁRIO (Instantânea)
+          function addUserMessage(text) {
             const msgDiv = document.createElement("div");
-            msgDiv.className = `mk-cb-msg ${sender}`;
-            
-            // Formatador simples para negrito
-            let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-            msgDiv.innerHTML = formattedText;
-
-            if (showWaBtn) {
-              const waUrl = `https://wa.me/${CHATBOT_CONFIG.whatsappNumber}?text=${encodeURIComponent(CHATBOT_CONFIG.defaultMessage)}`;
-              const waBtn = document.createElement("a");
-              waBtn.className = "mk-cb-whatsapp-btn";
-              waBtn.href = waUrl;
-              waBtn.target = "_blank";
-              waBtn.rel = "noopener noreferrer";
-              waBtn.innerHTML = `<i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp`;
-              msgDiv.appendChild(waBtn);
-            }
-
+            msgDiv.className = "mk-cb-msg user";
+            msgDiv.innerText = text;
             messagesContainer.appendChild(msgDiv);
             scrollToBottom();
           }
 
-          // ADICIONAR MENSAGEM DO USUÁRIO
-          function addUserMessage(text) {
-            addMessage(text, "user");
+          // EFETUA A DIGITAÇÃO TIPO "TYPEWRITER" PARA O BOT
+          function typeBotMessage(fullText, showWaBtn = false, onComplete = null) {
+            const msgDiv = document.createElement("div");
+            msgDiv.className = "mk-cb-msg bot";
+            
+            // Elemento onde o texto será inserido e o cursor
+            const textSpan = document.createElement("span");
+            const cursorSpan = document.createElement("span");
+            cursorSpan.className = "mk-typing-cursor";
+            
+            msgDiv.appendChild(textSpan);
+            msgDiv.appendChild(cursorSpan);
+            messagesContainer.appendChild(msgDiv);
+            scrollToBottom();
+
+            let index = 0;
+            const speed = 18; // Velocidade da digitação (ms por caractere)
+
+            function typeNextChar() {
+              if (index < fullText.length) {
+                index++;
+                let currentSub = fullText.substring(0, index);
+                
+                // Formata negrito e quebras de linha durante a digitação
+                let formatted = currentSub
+                  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                  .replace(/\n/g, '<br>');
+
+                textSpan.innerHTML = formatted;
+                scrollToBottom();
+                setTimeout(typeNextChar, speed);
+              } else {
+                // Remove o cursor após terminar de digitar
+                cursorSpan.remove();
+
+                // Adiciona o botão do WhatsApp se necessário
+                if (showWaBtn) {
+                  const waUrl = `https://wa.me/${CHATBOT_CONFIG.whatsappNumber}?text=${encodeURIComponent(CHATBOT_CONFIG.defaultMessage)}`;
+                  const waBtn = document.createElement("a");
+                  waBtn.className = "mk-cb-whatsapp-btn";
+                  waBtn.href = waUrl;
+                  waBtn.target = "_blank";
+                  waBtn.rel = "noopener noreferrer";
+                  waBtn.innerHTML = `<i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp`;
+                  msgDiv.appendChild(waBtn);
+                  scrollToBottom();
+                }
+
+                if (onComplete) onComplete();
+              }
+            }
+
+            typeNextChar();
           }
 
-          // INDICADOR DE DIGITAÇÃO
+          // INDICADOR DE DIGITAÇÃO (PONTINHOS PISCANDO)
           function showTyping() {
             const typingDiv = document.createElement("div");
             typingDiv.className = "mk-cb-typing";
@@ -910,12 +969,12 @@
               }
 
               if (matchedAnswer) {
-                addMessage(matchedAnswer.response, "bot", matchedAnswer.showWhatsAppBtn || false);
+                typeBotMessage(matchedAnswer.response, matchedAnswer.showWhatsAppBtn || false);
               } else {
-                const fallbackMsg = "Essa é uma ótima pergunta! Para não passar uma informação incorreta, recomendo entrar em contato diretamente com nossa equipe pelo WhatsApp.";
-                addMessage(fallbackMsg, "bot", true);
+                const fallbackMsg = "Essa eu não entendi bem! Para não passar uma informação incorreta, recomendo entrar em contato diretamente com nossa equipe pelo WhatsApp.<br>";
+                typeBotMessage(fallbackMsg, true);
               }
-            }, 800);
+            }, 600);
           }
 
           // ENVIAR MENSAGEM DO CAMPO DE TEXTO
