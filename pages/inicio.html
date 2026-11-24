@@ -788,8 +788,9 @@
               response: "Os **terrários** são pequenos ecossistemas decorativos fechados ou abertos, reunindo plantas selecionadas, substrato especial e pedras naturais. Eles reproduzem a natureza em miniatura com baixa manutenção!"
             },
             {
-              keywords: ["projeto", "projetos", "conhecer", "modelos", "criaçoes", "criacoes"],
-              response: "Desenvolvemos desde aquaterrários compactos para mesas e estantes até grandes biótopos personalizados para ambientes residenciais e corporativos. Você pode ver alguns dos nossos trabalhos na nossa Galeria no site!"
+              keywords: ["projeto", "projetos", "conhecer", "modelos", "criaçoes", "criacoes", "galeria", "fotos", "ver"],
+              response: "Desenvolvemos desde aquaterrários compactos para mesas e estantes até grandes biótopos personalizados para ambientes residenciais e corporativos. Você pode ver nossos projetos diretamente na nossa Galeria no site!<br>",
+              showGalleryBtn: true
             },
             {
               keywords: ["cuidar", "cuidados", "manutençao", "manutencao", "limpeza", "luz"],
@@ -848,7 +849,7 @@
           // MENSAGEM INICIAL DO BOT COM EFEITO DE DIGITAÇÃO
           function sendBotGreeting() {
             const greeting = "Olá! 🐠 Seja bem-vindo à Magi'Karp!\n\nEu sou o Karp, seu assistente virtual. Estou aqui para ajudar você a conhecer nossos aquaterrários, terrários e projetos personalizados.\n\nComo posso ajudar hoje?";
-            typeBotMessage(greeting, false, () => {
+            typeBotMessage(greeting, false, false, () => {
               renderQuickOptions();
             });
           }
@@ -883,7 +884,7 @@
           }
 
           // EFETUA A DIGITAÇÃO TIPO "TYPEWRITER" PARA O BOT
-          function typeBotMessage(fullText, showWaBtn = false, onComplete = null) {
+          function typeBotMessage(fullText, showWaBtn = false, showGalleryBtn = false, onComplete = null) {
             const msgDiv = document.createElement("div");
             msgDiv.className = "mk-cb-msg bot";
             
@@ -916,6 +917,21 @@
               } else {
                 // Remove o cursor após terminar de digitar
                 cursorSpan.remove();
+
+                // Adiciona o botão da Galeria se necessário
+                if (showGalleryBtn) {
+                  const galBtn = document.createElement("a");
+                  galBtn.className = "mk-cb-whatsapp-btn";
+                  galBtn.style.backgroundColor = "var(--mk-gold)";
+                  galBtn.style.color = "#101A18";
+                  galBtn.href = "#galeria";
+                  galBtn.onclick = () => {
+                    container.classList.remove("mk-cb-open"); // Fecha a janela do chat ao clicar
+                  };
+                  galBtn.innerHTML = `<i class="fa-solid fa-images"></i> Ver Nossos Projetos`;
+                  msgDiv.appendChild(galBtn);
+                  scrollToBottom();
+                }
 
                 // Adiciona o botão do WhatsApp se necessário
                 if (showWaBtn) {
@@ -969,10 +985,14 @@
               }
 
               if (matchedAnswer) {
-                typeBotMessage(matchedAnswer.response, matchedAnswer.showWhatsAppBtn || false);
+                typeBotMessage(
+                  matchedAnswer.response, 
+                  matchedAnswer.showWhatsAppBtn || false, 
+                  matchedAnswer.showGalleryBtn || false
+                );
               } else {
                 const fallbackMsg = "Essa eu não entendi bem! Para não passar uma informação incorreta, recomendo entrar em contato diretamente com nossa equipe pelo WhatsApp.<br>";
-                typeBotMessage(fallbackMsg, true);
+                typeBotMessage(fallbackMsg, true, false);
               }
             }, 600);
           }
